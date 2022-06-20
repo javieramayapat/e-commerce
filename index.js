@@ -1,4 +1,5 @@
-const express = require('express')
+const express = require('express');
+const faker = require('faker');
 const app = express();
 const port = 3000;
 
@@ -12,25 +13,20 @@ app.get('/new-route', (req, res) => {
   res.status(200).send("Hello new route")
 });
 
-
+// integrate query parameter size to generate data in a dinamic way
 app.get('/products', (req, res) => {
-  res.status(200).json([
-    {
-      "id": 1,
-      "name": "t-shirts",
-      "price": 150.60
-    },
-    {
-      "id": 2,
-      "name": "pants",
-      "price": 500
-    },
-    {
-      "id": 3,
-      "name": "pants",
-      "price": 200
-    }
-  ]);
+  const { size } = req.query;
+  const products = []
+  let limit = size || 10;
+  for (let index = 0; index < limit; index++) {
+    products.push({
+      name: faker.commerce.productName(),
+      price: parseInt(faker.commerce.price(), 10),
+      image: faker.image.imageUrl(),
+    });
+  }
+
+  res.status(200).json(products);
 });
 
 
