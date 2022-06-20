@@ -57,6 +57,26 @@ app.get('/products/:id', (req, res) => {
     "price": 150.60
   });
 });
+
+
+// Challenge: recive query parameter limit, offset
+// Example: http://localhost:3000/users?limit=54&offset=41
+app.get('/users', (req, res) => {
+  const { limit, offset } = req.query;
+
+  if (!limit && !offset) {
+    res.json({
+      "message": "No limit and offset recived"
+    });
+  }
+
+  res.status(200).json({
+    "limit": limit,
+    "offset": offset
+  })
+})
+
+
 // Chalenge: create a route to see the detail of a cataegory
 app.get('/categories/:id', (req, res) => {
   const { id } = req.params;
