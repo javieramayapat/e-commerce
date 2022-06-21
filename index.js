@@ -3,6 +3,8 @@ const routerApi = require('./routes') // the file index.js if automatically look
 const app = express();
 const port = 3000;
 
+// ✅ Integration of a native express middleware to receive information in JSON format
+app.use(express.json());
 
 app.get('/', (req, res) => {
   res.send('Hello World')

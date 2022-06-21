@@ -40,4 +40,14 @@ router.get('/:id', (req, res) => {
 });
 
 
+router.post('/', (req, res) => {
+  // req.body allow me retrieve the entire contents of the body of the request
+  const body = req.body;
+  res.json({
+    message: "Created",
+    data: body
+  })
+})
+
+
 module.exports = router;
