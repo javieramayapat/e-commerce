@@ -32,20 +32,82 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   const { id } = req.params;
 
+  if (id === '999') {
+    res.status(404).json({
+      message: 'Not Found'
+    });
+  }
+
   res.status(200).json({
     "id": id,
     "name": "t-shirts",
     "price": 150.60
   });
+
 });
 
 
 router.post('/', (req, res) => {
   // req.body allow me retrieve the entire contents of the body of the request
   const body = req.body;
-  res.json({
+  res.status(201).json({
     message: "Created",
     data: body
+  })
+})
+
+
+// Challenge: create a put endpoint for a product
+router.put('/:id', (req, res) => {
+  let { id } = req.params;
+  const body = req.body;
+
+  if (id === '999') {
+    res.status(404).json({
+      message: 'Not Found'
+    });
+  }
+
+  res.status(200).json({
+    message: "update product",
+    data: body,
+    id: id
+  });
+
+});
+// Challenge: create a patch endpoint for a product
+
+router.patch('/:id', (req, res) => {
+  let { id } = req.params;
+  const body = req.body;
+
+  if (id === '999') {
+    res.status(404).json({
+      message: 'Not Found'
+    });
+  }
+
+  res.status(200).json({
+    message: "Partial Update:",
+    data: body,
+    id: id
+  });
+});
+
+
+// Challenge: create a delete endpoint for a product
+router.delete('/:id', (req, res) => {
+  let { id } = req.params;
+
+  if (id === '999') {
+    res.status(404).json({
+      message: 'Not Found'
+    });
+  }
+
+  res.status(204).json({
+    message: "Delete",
+    id: id
   })
 })
 
