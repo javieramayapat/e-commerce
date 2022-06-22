@@ -1,6 +1,5 @@
 const express = require('express');
-const faker = require('faker');
-
+const ProductsService = require('./../services/products.service')
 /**
  *  In this case we don´t have acces to the application so let's create a router
  *  It's important to separe the resource and only left fron the route and only
@@ -10,21 +9,11 @@ const faker = require('faker');
  *  ✅ /:id
  */
 const router = express.Router();
+const service = new ProductsService();
 
 // integrate query parameter size to generate data in a dinamic way
 router.get('/', (req, res) => {
-  const { size } = req.query;
-  const products = []
-  let limit = size || 10;
-
-  for (let index = 0; index < limit; index++) {
-    products.push({
-      name: faker.commerce.productName(),
-      price: parseInt(faker.commerce.price(), 10),
-      image: faker.image.imageUrl(),
-    });
-  }
-
+  const products = service.findAll();
   res.status(200).json(products);
 });
 
