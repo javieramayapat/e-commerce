@@ -7,29 +7,31 @@ const ProductsService = require('./../services/products.service')
  *
  *  ❌ products/:id
  *  ✅ /:id
+ *
+ *  Note: By using asynchronous functions, we can cache errors using try and catch.
  */
 const router = express.Router();
 const service = new ProductsService();
 
 // integrate query parameter size to generate data in a dinamic way
-router.get('/', (req, res) => {
-  const products = service.findAll();
+router.get('/', async (req, res) => {
+  const products = await service.findAll();
   res.status(200).json(products);
 });
 
 // Challenge: create a route to see the detail of a product
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   const { id } = req.params;
-  const product = service.findOne(id);
+  const product = await service.findOne(id);
   res.status(200).json(product);
 
 });
 
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   // req.body allow me retrieve the entire contents of the body of the request
   const body = req.body;
-  const newProduct = service.create(body);
+  const newProduct = await service.create(body);
 
   res.status(201).json(newProduct)
 
@@ -37,30 +39,36 @@ router.post('/', (req, res) => {
 
 
 // Challenge: create a put endpoint for a product
-router.put('/:id', (req, res) => {
+router.put('/:id', async (req, res) => {
   let { id } = req.params;
   const body = req.body;
 
-  const updateProduct = service.update(id, body);
+  const updateProduct = await service.update(id, body);
   res.status(200).json(updateProduct);
 
 });
 
 // Challenge: create a patch endpoint for a product
-router.patch('/:id', (req, res) => {
-  let { id } = req.params;
-  const body = req.body;
+router.patch('/:id', async (req, res) => {
+  try {
+    let { id } = req.params;
+    const body = req.body;
+    const partialUpdateProduct = await service.update(id, body);
+    res.status(200).json(partialUpdateProduct);
+  } catch (error) {
+    res.status(404).json({
+      message: error.message
+    });
+  }
 
-  const partialUpdateProduct = service.update(id, body);
-  res.status(200).json(partialUpdateProduct);
 });
 
 
 // Challenge: create a delete endpoint for a product
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   let { id } = req.params;
 
-  const response = service.delete(id)
+  const response = await service.delete(id)
   res.status(204).json(response)
 })
 

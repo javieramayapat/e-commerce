@@ -3,6 +3,7 @@ const faker = require('faker');
 /**
  * In a service we need to have the transactional management that we must bring to even one product
  * This represents the Application Business Rules layer.
+ * services are often asynchronous processes, since they have a delay time to respond, that is why we can implement async - await
  */
 class ProductsService {
 
@@ -28,7 +29,7 @@ class ProductsService {
 
   }
 
-  create(data) {
+  async create(data) {
     // When I'm going to develop the create method it so important do define
     // the strucure of the object that I'm going to persist in my database
 
@@ -50,16 +51,21 @@ class ProductsService {
 
 
   findAll() {
-    return this.products;
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(this.products)
+      }, 5000);
+    })
   }
 
-  findOne(id) {
+
+  async findOne(id) {
 
     return this.products.find(item => item.id === id)
 
   }
 
-  update(id, changes) {
+  async update(id, changes) {
 
     // look for the id in products
     const index = this.products.findIndex(item => item.id === id);
@@ -81,7 +87,7 @@ class ProductsService {
   }
 
 
-  delete(id) {
+  async delete(id) {
 
     // look for the id in the database
     let productIndex = this.products.findIndex(item => item.id === id);
