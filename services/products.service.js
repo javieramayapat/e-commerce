@@ -28,7 +28,23 @@ class ProductsService {
 
   }
 
-  create() {
+  create(data) {
+    // When I'm going to develop the create method it so important do define
+    // the strucure of the object that I'm going to persist in my database
+
+    // using objects desestructurin for mantein only the fields required to cretae my object
+    const { name, price, image } = data;
+
+    // Creating the object with only necesary fields
+    const newProduct = {
+      id: faker.datatype.uuid(),
+      name,
+      price,
+      image
+    }
+
+    this.products.push(newProduct);
+    return newProduct;
 
   }
 
@@ -43,12 +59,40 @@ class ProductsService {
 
   }
 
-  update() {
+  update(id, changes) {
 
+    // look for the id in products
+    const index = this.products.findIndex(item => item.id === id);
+
+    if (index === -1) {
+      throw new Error("Product Not Found");
+    }
+
+    // Get the product before the changes from the database using the previus index
+    const product = this.products[index];
+
+    // match the product stored with a new object and insert the previous object and adds the new changes using destructuring
+    this.products[index] = {
+      ...product,
+      ...changes
+    }
+
+    return this.products[index];
   }
 
 
-  delete() {
+  delete(id) {
+
+    // look for the id in the database
+    let productIndex = this.products.findIndex(item => item.id === id);
+
+    if (productIndex === -1) {
+      throw new Error("Product Not Found")
+    }
+
+    this.products.splice(productIndex, 1)
+
+    return { id }
 
   }
 

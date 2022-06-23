@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
 // Challenge: create a route to see the detail of a product
 router.get('/:id', (req, res) => {
   const { id } = req.params;
-  const product =  service.findOne(id);
+  const product = service.findOne(id);
   res.status(200).json(product);
 
 });
@@ -29,11 +29,11 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
   // req.body allow me retrieve the entire contents of the body of the request
   const body = req.body;
-  res.status(201).json({
-    message: "Created",
-    data: body
-  })
-})
+  const newProduct = service.create(body);
+
+  res.status(201).json(newProduct)
+
+});
 
 
 // Challenge: create a put endpoint for a product
@@ -41,36 +41,18 @@ router.put('/:id', (req, res) => {
   let { id } = req.params;
   const body = req.body;
 
-  if (id === '999') {
-    res.status(404).json({
-      message: 'Not Found'
-    });
-  }
-
-  res.status(200).json({
-    message: "update product",
-    data: body,
-    id: id
-  });
+  const updateProduct = service.update(id, body);
+  res.status(200).json(updateProduct);
 
 });
-// Challenge: create a patch endpoint for a product
 
+// Challenge: create a patch endpoint for a product
 router.patch('/:id', (req, res) => {
   let { id } = req.params;
   const body = req.body;
 
-  if (id === '999') {
-    res.status(404).json({
-      message: 'Not Found'
-    });
-  }
-
-  res.status(200).json({
-    message: "Partial Update:",
-    data: body,
-    id: id
-  });
+  const partialUpdateProduct = service.update(id, body);
+  res.status(200).json(partialUpdateProduct);
 });
 
 
@@ -78,16 +60,8 @@ router.patch('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   let { id } = req.params;
 
-  if (id === '999') {
-    res.status(404).json({
-      message: 'Not Found'
-    });
-  }
-
-  res.status(204).json({
-    message: "Delete",
-    id: id
-  })
+  const response = service.delete(id)
+  res.status(204).json(response)
 })
 
 
