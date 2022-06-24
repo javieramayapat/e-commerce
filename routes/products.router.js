@@ -1,5 +1,5 @@
 const express = require('express');
-const ProductsService = require('./../services/products.service')
+const ProductService = require('../services/product.service')
 /**
  *  In this case we don´t have acces to the application so let's create a router
  *  It's important to separe the resource and only left fron the route and only
@@ -11,7 +11,7 @@ const ProductsService = require('./../services/products.service')
  *  Note: By using asynchronous functions, we can cache errors using try and catch.
  */
 const router = express.Router();
-const service = new ProductsService();
+const service = new ProductService();
 
 // integrate query parameter size to generate data in a dinamic way
 router.get('/', async (req, res) => {

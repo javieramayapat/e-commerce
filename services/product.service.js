@@ -5,7 +5,7 @@ const faker = require('faker');
  * This represents the Application Business Rules layer.
  * services are often asynchronous processes, since they have a delay time to respond, that is why we can implement async - await
  */
-class ProductsService {
+class ProductService {
 
   constructor() {
     this.products = [];
@@ -105,4 +105,4 @@ class ProductsService {
 }
 
 
-module.exports = ProductsService
+module.exports = ProductService
