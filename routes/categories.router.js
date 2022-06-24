@@ -39,5 +39,53 @@ router.get('/:categoryId/products/:productId', (req, res) => {
 });
 
 
+router.post('/', (req, res) => {
+
+  const body = req.body;
+
+  res.status(200).json({
+    message: "Create",
+    body: body
+  })
+
+});
+
+
+router.put('/:id', (req, res) => {
+
+  const { id } = req.params;
+  const body = req.body;
+
+  res.status(200).json({
+    message: "Update",
+    id: id,
+    body: body
+  })
+
+});
+
+
+router.patch('/:id', (req, res) => {
+  const { id } = req.params;
+  const body = req.body;
+
+
+  res.status(200).json({
+    message: "Partial Update",
+    id: id,
+    body: body
+  });
+});
+
+
+router.delete('/:id', (req, res) => {
+  const { id } = req.params;
+  res.status(204).json({
+    message: "Delete",
+    id: id
+  })
+});
+
+
 
 module.exports = router;
