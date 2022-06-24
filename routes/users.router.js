@@ -1,9 +1,6 @@
 const express = require('express')
 
-
 const router = express.Router();
-
-
 
 
 // Challenge: recive query parameter limit, offset
@@ -19,7 +16,6 @@ router.get('/', (req, res) => {
       id: 1,
       name: "Daniela",
       email: "Daniela@gmail.com",
-      example: example
     }
   ]);
 });
