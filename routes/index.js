@@ -3,6 +3,7 @@ const express = require('express')
 const productsRouter = require('./products.router.js')
 const categoriesRouter = require('./categories.router.js')
 const usersRouter = require('./users.router.js')
+const ordersRouter = require('./orders.router.js')
 
 /**
  * Index.js is going to be the encharger to get the app from the entrypoint and
@@ -26,6 +27,8 @@ function routerApi(app) {
   router.use('/products', productsRouter);
   router.use('/categories', categoriesRouter);
   router.use('/users', usersRouter);
+  router.use('/orders', ordersRouter);
+
 }
 
 
